@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\Tetu\eclipse-workspace\Clase_1_Promedio\.metadata\.plugins\org.eclipse.jdt.core
+3697530243.index
+1671692264.index
