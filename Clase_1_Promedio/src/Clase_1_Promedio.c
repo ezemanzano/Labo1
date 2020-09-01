@@ -1,8 +1,8 @@
-#include <stdio.h>
+#include <stdio_ext.h>
 #include <stdlib.h>
 
 int main(void) {
-	setbuf(stdout,NULL);
+
 	int numero;
 	int acum = 0;
 	float resultado;
@@ -11,12 +11,12 @@ int main(void) {
 	for ( i = 0;i<5;i++)
 	{
 		printf ("Ingrese Numero:");
-		fflush(stdin);
+		__fpurge(stdin);
 		respuestaScan = scanf ("%d", &numero) ;
 		while (respuestaScan == 0)
 		{
 			printf ("Error - Ingrese Numero:");
-			fflush(stdin);
+			__fpurge(stdin);
 			respuestaScan = scanf ("%d", &numero) ;
 		}
 		acum = acum + numero ;
