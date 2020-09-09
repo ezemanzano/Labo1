@@ -15,7 +15,8 @@ int main(void) {
 	} else {
 		printf ("Se acabaron los intentos.\n");
 	}
-	respuesta = utn_getnumeroFloat (&peso,"Peso? \n","error- peso debe ser de 0-300",0,300, 2);
+
+	respuesta = utn_getnumeroFloat (&peso,"Peso? \n","error- peso debe ser de 0-300",0.0,299.99, 2);
 		if (respuesta == 0) {
 			printf ("El peso es %.2f\n", peso);
 		} else {
@@ -31,4 +32,6 @@ int main(void) {
 		{
 			printf ("Se acabaron los intnteos");
 		}
+
+
 }
