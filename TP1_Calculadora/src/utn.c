@@ -41,20 +41,20 @@ int utn_getnumeroFloat (float* fResultado, char* mensaje, char* mensajeError, in
  * \return -
  */
 
-int utn_getChar (char* pResultado, char* mensaje, char* mensajeError,char minimo, char maximo, int intentos)
+int utn_getMenu (int* pResultado, char* mensaje, char* mensajeError,char minimo, char maximo, int intentos)
 {
 	int retorno = -1;
 	int resultadoScan ;
-	char bufferChar;
+	int bufferInt;
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL && maximo>minimo && intentos>=0) {
 	do {
 		printf("%s\n", mensaje);
 		__fpurge(stdin);
-		resultadoScan = scanf ("%c", &bufferChar);
+		resultadoScan = scanf ("%d", &bufferInt);
 
-		if (resultadoScan != 0 && bufferChar >= minimo && bufferChar <= maximo)
+		if (resultadoScan != 0 && bufferInt >= minimo && bufferInt <= maximo)
 		{
-		*pResultado = bufferChar;
+		*pResultado = bufferInt;
 		retorno = 0;
 		break;
 		}
@@ -91,7 +91,7 @@ float multiplicar(float operador1, float operador2) {
 float dividir (float operador1,float operador2, float* pResultado) {
 		float resul;
 		int huboError;
-		if (operador2 == 0) {
+		if (operador2 == 0.00) {
 			huboError = 1;
 		} else {
 			resul = operador1 / operador2 ;
@@ -102,24 +102,40 @@ float dividir (float operador1,float operador2, float* pResultado) {
 }
 
 // revisar el factorial - probar con int
-int factorial(float operador1, float operador2, float* pFactorial1, float* pFactorial2){
-		float factorialOperador1 = 1.00;
-		float factorialOperador2 = 1.00;
+int factorial(float operador1,float* pFactorial){
+		int factorialOperador1 = 1;
 		int retorno = -1;
-		for (float i = 0 ; i<operador1; i++){
-			factorialOperador1 = factorialOperador1 * i;
-			*pFactorial1 = factorialOperador1;
-			return retorno;
+		if (pFactorial != NULL) {
+			if (operador1>=0.00){
+			for (float j = 1.00 ; j<operador1; j++) {
+			factorialOperador1 = factorialOperador1 * j;
+			*pFactorial = factorialOperador1;
+			retorno = 0;
 		}
-		for (float i = 0 ; i<operador1; i++)
-		{
-				factorialOperador2 = factorialOperador2 * i;
-				*pFactorial2 = factorialOperador2;
-				return retorno;
+		} else if (operador1 == 0){
+			*pFactorial = 1;
+			retorno = 0;
+		} else {
+			retorno = -1;
 		}
 
+		} else {
+			printf ("ERROR - INGRESAR BIEN LOS PARAMETROS");
+		}
 		return retorno;
+}
+
+
+void  menuOpciones(float operando1,float operando2){
+	printf ("1) Ingresar 1er Operando \n");
+	printf ("2) Ingresar 2do Operando \n");
+	printf ("3) Calcular las operaciones \n");
+	printf ("4) Mostrar Resultados \n");
+	printf ("5) SALIR \n");
+	printf ("Operando 1 = %.2f", operando1);
+	printf ("operando 2 = %.2f", operando2);
 
 
 }
+
 
