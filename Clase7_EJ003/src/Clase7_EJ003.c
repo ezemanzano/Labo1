@@ -15,7 +15,7 @@
 
 int main(void) {
 	char numero[8] ;
-	strcpy(numero,"-1.50");
+	strcpy(numero,"100");
 	if (esNumerica(numero) == 0){
 		printf("error");
 	} else {

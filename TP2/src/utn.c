@@ -43,21 +43,34 @@ static int getFlt (float* pResultado){
 	return retorno;
 }
 
-static int esNumerica(char*cadena){
+int esNumerica(char*cadena){
 	int retorno = 1 ;
 	int i = 0;
+	int contadorPuntos = 0 ;
+	if (cadena[0] == '-' || cadena[0] == '+'){
+		i = 1;
+	}
 	for (;cadena[i] != '\0';i++) {
 		if (cadena[i] > '9' || cadena[i] < '0')
 		{
+			if (cadena[i] == '.'){
+				contadorPuntos++;
+				if (contadorPuntos >1){
+					retorno = 0;
+					break;
+				}
+			}
+			else
+			{
 				retorno = 0;
 				break;
 			}
+		}
 	}
 	return retorno;
 }
 
-
-int utn_getnumero (int* pResultado, char* mensaje, char* mensajeError,int minimo, int maximo, int intentos){
+int utn_getNumber (int* pResultado, char* mensaje, char* mensajeError,int minimo, int maximo, int intentos){
 
 	int retorno = -1;
 	int bufferInt;
@@ -108,7 +121,7 @@ int utn_getFloat (float* pResultado, char* mensaje, char* mensajeError,float min
 }
 
 
-int utn_getNombre (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos){
+int utn_getName (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos){
 	int retorno = -1 ;
 	char buffer[4096];
 	if (pResultado != NULL && len>0 && mensaje != NULL && mensajeError != NULL  && intentos>=0) {
