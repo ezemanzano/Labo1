@@ -5,6 +5,7 @@
 #include "ArrayEmployees.h"
 static int employeeNewId (void);
 static int menuModify (Employee * list ,int indexId);
+static int overAverageSalary (Employee * list , int len , int average);
 /** \brief To indicate that all position in the array are empty,
 * this function put the flag (isEmpty) in TRUE in all
 * position of the array
@@ -234,6 +235,71 @@ static int menuModify (Employee * list ,int indexId){
 	return output;
 }
 
+int sortEmployees(Employee* list, int len, int order)
+{
+	int output = -1 ;
+	int i;
+	Employee aux;
+	int flag=1;
 
+	if(list != NULL && len > 0)
+	{
+		while(flag)
+		{
+			flag = 0;
+			for(i = 0; i < (len - 1); i++)
+			{
+				if (strncmp(list[i].lastname, list[i + 1].lastname,LONG)>order){
+					aux = list[i];
+					list[i] = list[i + 1];
+					list[i + 1] = aux;
+					flag = 1;
+				}
+				else if(strncmp(list[i].lastname, list[i + 1].lastname,LONG) == 0 && list[i].sector > list[i+1].sector )
+				{
+					aux = list[i];
+					list[i] = list[i + 1];
+					list[i + 1] = aux;
+					flag = 1;
+				}
+			}
+		}
+		output = 0;
+	}
+	return output;
+}
 
+int averageSalary(Employee * list , int len){
+	int output =-1;
+	float acum= 0;
+	int salaryQty= 0;
+	float average;
+	int howMany=0;
+	for (int i = 0; i<len ; i++){
+		if (list[i].isEmpty != TRUE)
+		{
+			acum = acum + list[i].salary;
+			salaryQty ++;
+		}
+	}
+	average = (float)acum / salaryQty;
+	printf("\n The average salary is  %.2f", average);
+	howMany = overAverageSalary(list, len, average);
+	printf("\n There is %d employees over the average", howMany);
+	return output;
+}
 
+static int overAverageSalary (Employee * list , int len , int average) {
+	int output = -1;
+	int cont=0;
+	for (int i = 0 ; i< len ; i++)
+	{
+		if (list[i].salary >= average)
+		{
+			cont++;
+			output = cont;
+		}
+	}
+
+	return output;
+	}

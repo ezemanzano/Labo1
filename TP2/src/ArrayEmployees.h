@@ -30,4 +30,6 @@ int printEmployees (Employee* list, int length);
 int findEmployeeById(Employee* list, int len,int id);
 int removeEmployee(Employee* list, int len, int id);
 int modifyEmployee (Employee*list, int len , int id);
+int sortEmployees(Employee* list, int len, int order);
+int averageSalary(Employee * list , int len);
 #endif /* ARRAYEMPLOYEES_H_ */
