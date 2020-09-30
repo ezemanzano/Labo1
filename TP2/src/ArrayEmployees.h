@@ -32,4 +32,6 @@ int removeEmployee(Employee* list, int len, int id);
 int modifyEmployee (Employee*list, int len , int id);
 int sortEmployees(Employee* list, int len, int order);
 int averageSalary(Employee * list , int len);
+int printEmployeesAvarage (Employee* list, int length , float average);
+int askForId (Employee * pArray,int limite,int * id);
 #endif /* ARRAYEMPLOYEES_H_ */

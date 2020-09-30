@@ -13,6 +13,7 @@
 #include <string.h>
 #include "utn.h"
 #include "alumno.h"
+#define SIZESTRUCT_ALUMNO 3
 
 
 
@@ -26,7 +27,7 @@ int main(void) {
 	Alumno arrayAlumno[SIZESTRUCT_ALUMNO];
 	if (alumno_init(arrayAlumno, SIZESTRUCT_ALUMNO) == 0){
 		do {
-			 utn_getnumero(&opcion, "\n 1-Alta \n 2- Imprimir \n 3-Baja  \n  4-Modificar 5-Imprimir indice 6- buscarLibre 7- SALIR \n ", "serror",1,7,2);
+			 utn_getnumero(&opcion, "\n 1-Alta \n 2- Imprimir \n 3-Baja  \n  4-Modificar 5-Imprimir indice 6- buscarLibre 7- SALIR \n ", "serror",1,8,2);
 			 switch (opcion){
 			 case 1:
 				alumno_alta(arrayAlumno,SIZESTRUCT_ALUMNO);
@@ -44,7 +45,7 @@ int main(void) {
 				utn_getnumero (&idBuscar, "Que ID Desea buscar","ERRROR",0,50,2);
 				alumno_buscarIndice (arrayAlumno,SIZESTRUCT_ALUMNO,idBuscar,&indice2);
 				printf("%d",indice2);
-				// alumno_modificar (arrayAlumno,SIZESTRUCT_ALUMNO);
+				alumno_modificar (arrayAlumno,SIZESTRUCT_ALUMNO);
 				 break;
 			 case 5:
 				 utn_getnumero(&indice, "Ingrese indice", "seerror",0,4,2);
@@ -58,8 +59,11 @@ int main(void) {
 					printf("No hay indices libres :( ");
 				}
 				break;
+			 case 7:
+				 alumno_ordenarPorNombre(arrayAlumno,SIZESTRUCT_ALUMNO,1);
+				 alumno_imprimir(arrayAlumno, SIZESTRUCT_ALUMNO);
 			 }
-		 }while (opcion != 7);
+		 }while (opcion != 8);
 
 
 	}

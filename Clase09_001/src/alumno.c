@@ -201,6 +201,32 @@ int alumno_buscarIndice (Alumno * pArrayAlumnos, int limite, int idBuscar,int * 
 				printf("errrror");
 			}
 		return retorno;
+}
+
+int alumno_ordenarPorNombre (Alumno * pArrayAlumnos, int limite , int orden){
+	int retorno = -1;
+	int estadoDesordenado = 1;
+	Alumno aux;
+	if (pArrayAlumnos != NULL && limite >0){
+	while(estadoDesordenado)//mientras este desordenado
+	{
+		estadoDesordenado = 0;
+		for(int i = 0; i < (limite - 1); i++)
+		{
+			if((orden == 1 && strncmp(pArrayAlumnos[i].nombre, pArrayAlumnos[i + 1].nombre,LONG)>0)
+					||
+			  (orden == 0 && strncmp(pArrayAlumnos[i].nombre, pArrayAlumnos[i + 1].nombre,LONG)<0))
+			{
+				aux = pArrayAlumnos[i];
+				pArrayAlumnos[i] = pArrayAlumnos[i + 1];
+				pArrayAlumnos[i + 1] = aux;
+				estadoDesordenado = 1;
+			}
 		}
+	}
+	retorno = 0;
 
 
+	}
+	return retorno;
+}

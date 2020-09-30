@@ -9,19 +9,19 @@
 #define ALUMNO_H_
 
 #define LONG 50
-#define SIZESTRUCT_ALUMNO 3
+
 #define TRUE 1
 #define FALSE 0
 #define MIN_LEGAJO 1
 #define MAX_LEGAJO 5
 
 
-typedef struct {
-	char nombre[LONG];
-	int legajo;
-	int isEmpty;
-	int id;
-	} Alumno;
+	typedef struct {
+		char nombre[LONG];
+		int legajo;
+		int isEmpty;
+		int id;
+		} Alumno;
 	int alumno_alta (Alumno * pArrayAlumnos, int limite);
 	int alumno_init(Alumno * pArrayAlumnos, int limite);
 	int alumno_imprimir (Alumno * pArrayAlumnos , int limite);

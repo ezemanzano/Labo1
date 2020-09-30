@@ -64,7 +64,6 @@ int utn_getnumero (int* pResultado, char* mensaje, char* mensajeError,int minimo
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL && maximo>minimo && intentos>=0) {
 	do {
 		printf("%s\n", mensaje);
-		__fpurge(stdin);
 		if (getInt(&bufferInt) == 0 && bufferInt >= minimo && bufferInt <= maximo)
 		{
 		*pResultado = bufferInt;
@@ -89,7 +88,6 @@ int utn_getFloat (float* pResultado, char* mensaje, char* mensajeError,float min
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL && maximo>minimo && intentos>=0) {
 	do {
 		printf("%s\n", mensaje);
-		__fpurge(stdin);
 		if (getFlt(&bufferFloat) == 0 && bufferFloat >= minimo && bufferFloat <= maximo)
 		{
 		*pResultado = bufferFloat;
@@ -114,7 +112,6 @@ int utn_getNombre (char * pResultado, int len, char *mensaje, char* mensajeError
 	if (pResultado != NULL && len>0 && mensaje != NULL && mensajeError != NULL  && intentos>=0) {
 		do {
 			printf("%s\n", mensaje);
-			__fpurge(stdin);
 			if ( myGets(buffer,sizeof(buffer)) && esNombre(buffer,len) )
 			{
 				retorno = 0;
