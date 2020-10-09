@@ -26,11 +26,12 @@ int nac_init(Nac * pArrays, int limite){
 }
 
 
-int nac_alta (Nac * pArrays, int limite){
-int retorno = -1;
-int indice;
+int nac_alta (Nac * pArrays, int limite)
+{
+	int retorno = -1;
+	int indice;
 
-Nac bufferNac;
+	Nac bufferNac;
 	if (pArrays != NULL && limite >0)
 	{
 		if (nac_buscarLibreRef (pArrays, limite, &indice) == 0)
@@ -50,8 +51,8 @@ Nac bufferNac;
 				printf(" \n No quedan espacios libres");
 			}
 		}
-	return retorno ;
-	}
+		return retorno ;
+}
 
 
 int nac_imprimir (Nac * pArrays , int limite) {
@@ -70,68 +71,63 @@ return retorno;
 }
 
 
+
+
+
 int nac_baja (Nac * pArrays, int limite){
 	int retorno = -1;
-	char buffer[LONG];
-			if (pArrays != NULL && limite>0){
-			nac_imprimir(pArrays, limite);
-			utn_getNombre(buffer,LONG,"Ingrese pais de nac a borrar","Error",3);
-			for (int i = 0 ; i<limite ;  i++){
-				if (strncmp(pArrays[i].pais,buffer,LONG) == 0){
-					pArrays[i].isEmpty = TRUE;
-				}
+	int idABorrar;
+	int indiceABorrar;
+
+	if (pArrays != NULL && limite>0)
+	{
+		nac_imprimir(pArrays, limite);
+		if(utn_getNumero(&idABorrar,"Ingrese pais de nac a borrar","Error",0,9999,3)==0)
+		{
+			// busco la posicion a borrar
+			if(nac_buscarIndicePorId(pArrays,limite,idABorrar,&indiceABorrar)==0)
+			{
+				// borro esa posicion
+				pArrays[indiceABorrar].isEmpty=TRUE;
 			}
 		}
-
+	}
 	return retorno;
-
 }
+
 // ver de no perder el ID y usar las nuevas FN
-int nac_modificar (Nac * pArrays, int limite){
+int nac_modificar (Nac * pArrays, int limite)
+{
 	int retorno = -1;
-	char modificar[20];
-	char buffer[LONG];
+	int idBuscar;
+	int indiceAModificar;
 	Nac bufferNac;
-			if (pArrays != NULL && limite>0){
-			nac_imprimir(pArrays, limite);
-			utn_getNombre(buffer, LONG ,"Ingrese ID de nac a modificar","Error",3);
-			for (int i = 0 ; i<limite ;  i++){
-				if (buffer == pArrays[i].id){
-				utn_getNombre(modificar, 20, "Que desea modificar? (nombre / pais)", "error", 2);
-				if (strcmp(modificar, "pais") == 0){
-					if (utn_getNombre(bufferNac.pais, LONG ,"\n Nuevo pais?", "error",2) == 0){
-						strncpy(pArrays[i].pais,bufferNac.pais,LONG);
-					} else {
-						printf("horror");
+
+	if (pArrays != NULL && limite>0)
+	{
+		nac_imprimir(pArrays, limite);
+
+		if(utn_getNumero(&idBuscar,"ID:","ERROR!",0,9999,2)==0)
+		{
+			if(nac_buscarIndicePorId(pArrays, limite,idBuscar,&indiceAModificar)==0)
+			{
+				bufferNac = pArrays[indiceAModificar]; // IMPORTANTE!
+
+				if (utn_getNombre(bufferNac.pais, LONG ,"\n Nuevo pais?", "error",2) == 0)
+				{
+					if (utn_getNombre(bufferNac.nombre, LONG, " \n Ingrese nuevo nombre","ERROR",3) == 0)
+					{
+						pArrays[indiceAModificar] = bufferNac; // COPIAMOS AL ARRAY
+						retorno = 0;
 					}
-				}else {
-					if (utn_getNombre(bufferNac.nombre, LONG, " \n Ingrese nuevo nombre","ERROR",3) == 0){
-						strncpy(pArrays[i].nombre,bufferNac.nombre,LONG);
-				}else {
-					printf("horror");
-				}
-				}
 				}
 			}
 		}
+	}
 
 	return retorno;
-
 }
 
-int nac_imprimirIndice (Nac * pArrays, int limite, int indice){
-	int retorno = -1;
-		if (pArrays != NULL && limite >0){
-
-				if(pArrays[indice].isEmpty == FALSE)
-				{
-					printf("\nNombre: %s - pais: %s",pArrays[indice].nombre,pArrays[indice].pais);
-				}
-
-			retorno = 0;
-		}
-	return retorno;
-}
 
 int nac_buscarLibre (Nac * pArrays, int limite){
 	int retorno = -1;
@@ -170,7 +166,8 @@ static int nac_generarNuevoId (void) {
 	return id;
 }
 
-int nac_buscarIndice (Nac * pArrays, int limite, int idBuscar,int * pIndice){
+int nac_buscarIndicePorId (Nac * pArrays, int limite,
+		               int idBuscar,int * pIndice){
 	int retorno = -1;
 	int i ;
 		if (pArrays != NULL && limite >0 && pIndice != NULL && idBuscar >= 0)
@@ -192,7 +189,8 @@ int nac_buscarIndice (Nac * pArrays, int limite, int idBuscar,int * pIndice){
 		return retorno;
 }
 
-int nac_ordenarPorNombre (Nac * pArrays, int limite , int orden){
+int nac_ordenarPorNombre (Nac * pArrays, int limite , int orden)
+{
 	int retorno = -1;
 	int estadoDesordenado = 1;
 	Nac aux;
@@ -219,3 +217,4 @@ int nac_ordenarPorNombre (Nac * pArrays, int limite , int orden){
 	}
 	return retorno;
 }
+

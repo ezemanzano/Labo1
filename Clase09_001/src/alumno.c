@@ -46,7 +46,7 @@ Alumno bufferAlumno;
 	{
 		if (alumno_buscarLibreRef (pArrayAlumnos, limite, &indice) == 0)
 		{
-				if (utn_getnumero(&bufferAlumno.legajo, "\n Legajo?", "error",  MIN_LEGAJO, MAX_LEGAJO,2) == 0 &&
+				if (utn_getNumero(&bufferAlumno.legajo, "\n Legajo?", "error",  MIN_LEGAJO, MAX_LEGAJO,2) == 0 &&
 					utn_getNombre(bufferAlumno.nombre, LONG, " \n Ingrese nombre","ERROR",3) == 0)
 				{
 						pArrayAlumnos[indice] = bufferAlumno;
@@ -86,7 +86,7 @@ int alumno_baja (Alumno * pArrayAlumnos, int limite){
 	int buffer;
 			if (pArrayAlumnos != NULL && limite>0){
 			alumno_imprimir(pArrayAlumnos, limite);
-			utn_getnumero(&buffer,"Ingrese legajo de alumno a borrar","Error", MIN_LEGAJO, MAX_LEGAJO,3);
+			utn_getNumero(&buffer,"Ingrese legajo de alumno a borrar","Error", MIN_LEGAJO, MAX_LEGAJO,3);
 			for (int i = 0 ; i<limite ;  i++){
 				if (buffer == pArrayAlumnos[i].legajo){
 					pArrayAlumnos[i].isEmpty = TRUE;
@@ -105,12 +105,12 @@ int alumno_modificar (Alumno * pArrayAlumnos, int limite){
 	Alumno bufferAlumno;
 			if (pArrayAlumnos != NULL && limite>0){
 			alumno_imprimir(pArrayAlumnos, limite);
-			utn_getnumero(&buffer,"Ingrese ID de alumno a modificar","Error", MIN_LEGAJO, MAX_LEGAJO,3);
+			utn_getNumero(&buffer,"Ingrese ID de alumno a modificar","Error", MIN_LEGAJO, MAX_LEGAJO,3);
 			for (int i = 0 ; i<limite ;  i++){
 				if (buffer == pArrayAlumnos[i].id){
 				utn_getNombre(modificar, 20, "Que desea modificar? (nombre / legajo)", "error", 2);
 				if (strcmp(modificar, "legajo") == 0){
-					if (utn_getnumero(&bufferAlumno.legajo, "\n Nuevo Legajo?", "error",  MIN_LEGAJO, MAX_LEGAJO,2) == 0){
+					if (utn_getNumero(&bufferAlumno.legajo, "\n Nuevo Legajo?", "error",  MIN_LEGAJO, MAX_LEGAJO,2) == 0){
 							pArrayAlumnos[i].legajo = bufferAlumno.legajo;
 					} else {
 						printf("horror");

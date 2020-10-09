@@ -9,4 +9,7 @@
 #define UTN_H_
 int utn_getNumero (int* pResultado, char* mensaje, char* mensajeError,int minimo, int maximo, int intentos);
 int utn_getNombre (char * pResultado, int len, char * mensaje, char * mensajeError, int intentos);
+int utn_getFloat (float* pResultado, char* mensaje, char* mensajeError,float minimo, float maximo, int intentos);
+int utn_getCuit (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos);
+int utn_getString (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos);
 #endif /* UTN_H_ */

@@ -15,15 +15,33 @@ static int getInt (int* pResultado);
 static int getFlt (float* pResultado);
 static int esNumerica (char* cadena);
 static int esNombre (char*cadena, int limite);
+static int esCuit(char*cadena, int limite);
+static int esString (char*cadena, int limite);
 
+static int myGets(char* cadena, int longitud){
+	int retorno = -1; //ERROR
+	char bufferString[4096];
 
-static int myGets (char* cadena, int longitud){
-		__fpurge (stdin);
-		fgets(cadena,longitud,stdin);
-		cadena[strnlen(cadena,sizeof(cadena))-1]='\0';
-		return 1;
+	if(cadena != NULL && longitud > 0)
+	{
+		__fpurge(stdin);
+		if(fgets(bufferString,sizeof(bufferString),stdin) != NULL)
+		{
+			if(bufferString[strnlen(bufferString,sizeof(bufferString))-1] == '\n')
+			{
+				bufferString[strnlen(bufferString,sizeof(bufferString))-1] = '\0';
+			}
+			if(strlen(bufferString) <= longitud)
+			{
+				strncpy(cadena,bufferString,longitud);
+				retorno = 1; //EXITO
+			}
+
+		}
+
+	}
+	return retorno;
 }
-
 static int getInt (int* pResultado){
 	int retorno = -1 ;
 	char buffer[4096];
@@ -137,6 +155,102 @@ static int esNombre (char*cadena, int limite) {
 	int i ;
 	for (i = 0 ; i<=limite && cadena[i] != '\0'; i++){
 		if	((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z'))
+		{
+			retorno = 0;
+			break;
+		}}
+	return retorno;
+}
+
+int utn_getCuit (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos){
+	int retorno = -1 ;
+	char buffer[4096];
+	if (pResultado != NULL && len>0 && mensaje != NULL && mensajeError != NULL  && intentos>=0) {
+		do {
+			printf("%s\n", mensaje);
+			if ( myGets(buffer,sizeof(buffer)) && esCuit(buffer,len) )
+			{
+				retorno = 0;
+				strncpy(pResultado,buffer,len);
+				break;
+			}
+			else
+			{
+			printf("%s \n", mensajeError);
+			intentos--;
+			}
+		} while (intentos >= 0 );
+
+		}
+
+
+
+	return retorno;
+}
+
+static int esCuit(char*cadena, int limite) {
+	int retorno = 1;
+	int contador = 0;
+	int i ;
+	for (i = 0 ; i<=limite && cadena[i] != '\0'; i++)
+	{
+		if	((cadena[i] < 'a' || cadena[i] > 'z') &&
+			(cadena[i] < 'A' || cadena[i] > 'Z') &&
+			(cadena[i]< '0' || cadena[i] > '9'))
+		{
+			if (cadena[i] == '-')
+			{
+				contador++;
+				if (contador>2)
+				{
+					retorno = 0;
+					break;
+				}
+
+			}
+			else
+			{
+				retorno = 0;
+				break;
+			}
+
+
+		}
+	}
+	return retorno;
+}
+
+int utn_getString (char * pResultado, int len, char *mensaje, char* mensajeError, int intentos){
+	int retorno = -1 ;
+	char buffer[4096];
+	if (pResultado != NULL && len>0 && mensaje != NULL && mensajeError != NULL  && intentos>=0) {
+		do {
+			printf("%s\n", mensaje);
+			if ( myGets(buffer,sizeof(buffer)) && esString(buffer,len) )
+			{
+				retorno = 0;
+				strncpy(pResultado,buffer,len);
+				break;
+			}
+			else
+			{
+			printf("%s \n", mensajeError);
+			intentos--;
+			}
+		} while (intentos >= 0 );
+
+		}
+
+
+
+	return retorno;
+}
+
+static int esString (char*cadena, int limite) {
+	int retorno = 1;
+	int i ;
+	for (i = 0 ; i<=limite && cadena[i] != '\0'; i++){
+		if	((cadena[i] < 'a' || cadena[i] > 'z') && (cadena[i] < 'A' || cadena[i] > 'Z') && cadena[i]!=' ')
 		{
 			retorno = 0;
 			break;

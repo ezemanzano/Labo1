@@ -18,15 +18,19 @@
 		int isEmpty;
 		int id;
 		} Nac;
-	int nac_alta (Nac * pArrayNacs, int limite);
+
 	int nac_init(Nac * pArrayNacs, int limite);
+
+	int nac_alta (Nac * pArrayNacs, int limite);
+
 	int nac_imprimir (Nac * pArrayNacs , int limite);
 	int nac_baja (Nac * pArrayNacs, int limite);
 	int nac_modificar (Nac * pArrayNacs, int limite);
-	int nac_imprimirIndice (Nac * pArrayNacs, int limite, int indice);
+
+
 	int nac_buscarLibre (Nac * pArrayNacs, int limite);
 	int nac_buscarLibreRef (Nac * pArrayNacs, int limite, int * pIndice);
-	int nac_alta2 (Nac * pArrayNacs, int limite);
-	int nac_buscarIndice (Nac * pArrayNacs, int limite, int idBuscar,int * pIndice);
+	int nac_buscarIndicePorId (Nac * pArrays, int limite,int idBuscar,int * pIndice);
+
 
 #endif /* NAC_H_ */
