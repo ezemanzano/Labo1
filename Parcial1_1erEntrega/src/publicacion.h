@@ -13,6 +13,8 @@
 #define FALSE 0
 #define PUBLICACION_ACTIVA 1
 #define PUBLICACION_PAUSADA 0
+#define MIN_RUBRO 1
+#define MAX_RUBRO 10
 #include "cliente.h"
 
 	typedef struct {
@@ -25,27 +27,34 @@
 		} Publicacion;
 
 	int publicacion_init(Publicacion * pArrayPublicacions, int limite);
+	int publicacion_sePuedeSeguir(Publicacion * pArrayPubli , int limitePubli);
 
 	int publicacion_alta (Publicacion * pArrayPublicacions, int limite, Cliente * pArrayCliente , int limiteCliente);
-
+	int publicacion_baja (Publicacion * pArrayPubli, int limite, int idCliente);
+	int publicacion_bajaClienteYPublicaciones(Publicacion * pArrayPubli, int limitePublic,Cliente * pArrayCliente, int limiteCliente);
 
 	int publicacion_imprimirTodas(Publicacion * pArrayPublicacions , int limite , Cliente * pArrayCliente , int limiteCliente);
 	int publicacion_imprimirActivas (Publicacion * pArrayPubli , int limite , Cliente * pArrayCliente , int limiteCliente);
-	int publicacion_baja (Publicacion * pArrayPublicacions, int limite , Cliente * pArrayCliente , int limiteCliente);
-	int publicacion_modificar (Publicacion * pArrayPublicacions, int limite,Cliente * pArrayCliente, int limiteCliente);
+	int publicacion_imprimirPausadas(Publicacion * pArrayPubli , int limite , Cliente * pArrayCliente , int limiteCliente);
+
+
 	int publicacion_pausar (Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente);
 	int publicacion_reanudar (Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente);
+
+	void publicacion_listarPublicacionesDeCliente( Publicacion * pArrayPublic, int limitePubli , int idCliente);
+	int publicacion_clienteConMasAvisos(Publicacion * pArrayPubli, int limitePubli,Cliente * pArrayCliente, int limiteCliente);
+	int publicacion_cantidadPausados (Publicacion * pArrayPubli, int limitePubli);
+	int publicacion_rubroConMasAvisos (Publicacion * pArrayPubli, int limitePubli);
+	int publicacion_cantidadPublicPorIdCliente(Publicacion * pArrayPublic, int limitePubli, int idCliente, int *resContador);
+	int publicacion_listaClientes (Cliente * pArrayCliente, int limiteClientes, Publicacion * pArrayPublic, int limitePubli);
+	int publicacion_informacionCliente(Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente, int idCliente);
 
 	int publicacion_buscarLibre (Publicacion * pArrayPublicacions, int limite);
 	int publicacion_buscarLibreRef (Publicacion * pArrayPublicacions, int limite, int * pIndice);
 	int publicacion_buscarIndicePorId (Publicacion * pArrays, int limite,int idBuscar,int * pIndice);
-	int publicacion_buscarIndicePorCuit (Publicacion * pArrays, int limite,int cuitBuscar,int * pIndice);
-	int publicacion_buscarIndicePorCuitYId (Publicacion * pArrays, int limite,int cuitBuscar, int id,int * pIndice);
-	float publicacion_calcularImporteAPagar(Publicacion * pArrays, int limite, Cliente * pArrayCliente , int limiteCliente, int cuit , int idCont);
+	int publicacion_buscarIndicePorIdPausadas (Publicacion * pArrayPubli, int limite,int idBuscar,int * pIndice);
+	int publicacion_buscarIndicePorIdActivas(Publicacion * pArrayPubli, int limite,int idBuscar,int * pIndice);
 
 	int publicacion_altaForzada(Publicacion * pArray, int limite ,int idCliente,int rubro,  char * aviso);
-	int publicacion_imprimirPublicacionesPorCuit (Publicacion * pArrays, int limite, Cliente * pArrayCliente , int limiteCliente, int cuit);
-	int publicacion_ConsultarPrecioPorCuit (Publicacion * pArrays, int limite, Cliente * pArrayCliente , int limiteCliente);
-	void publicacion_listarClientes (Publicacion * pArrays , int limite);
-	int publicacion_listarClienteCaro (Publicacion * pArrays , int limite , Cliente * pArrayCliente , int limiteCliente);
+
 #endif /* PUBLICACION_H_ */

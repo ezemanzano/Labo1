@@ -12,8 +12,6 @@
 #define SIZE_CUIT 20
 #define TRUE 1
 #define FALSE 0
-#define CLIENTE_TIPO_LED 0
-#define CLIENTE_TIPO_LCD 1
 
 	typedef struct {
 		char nombre[SIZE_NOMBRE];
@@ -26,13 +24,13 @@
 	int cliente_init(Cliente * pArrayClientes, int limite);
 
 	int cliente_alta (Cliente * pArrayClientes, int limite);
-
 	int cliente_imprimir (Cliente * pArrayClientes , int limite);
-	int cliente_baja (Cliente * pArrayClientes, int limite);
+	int cliente_baja (Cliente * pArrays, int limite, int * idClienteBaja);
 	int cliente_modificar (Cliente * pArrayClientes, int limite);
 
 	int cliente_imprimirPorIndice (Cliente * pArrays , int limite, int indice);
 	int cliente_imprimirPrecioPorIndice (Cliente * pArrays , int limite, int indice) ;
+	int cliente_informacionCliente(Cliente * pArrayCliente, int limiteCliente, int idCliente);
 
 	int cliente_buscarLibre (Cliente * pArrayClientes, int limite);
 	int cliente_buscarLibreRef (Cliente * pArrayClientes, int limite, int * pIndice);
@@ -40,5 +38,6 @@
 	int cliente_buscarIndicePorId (Cliente * pArrays, int limite,int idBuscar);
 
 	int cliente_altaForzada(Cliente * pArray, int limite , char * nombre, char * apellido, char * cuit);
+	int cliente_sePuedeSeguir(Cliente * pArrayCliente, int limiteCliente);
 
 #endif /* CLIENTE_H_ */
