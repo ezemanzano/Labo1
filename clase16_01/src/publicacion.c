@@ -15,7 +15,11 @@
 #include "utn.h"
 
 static int publicacion_generarNuevoId (void);
-
+static int publicacion_setId(Publicacion* pArray,int val);
+static int publicacion_setAviso(Publicacion* pArray,char* val,int size);
+static int publicacion_setEstado(Publicacion* pArray,int val);
+static int publicacion_setRubro(Publicacion* pArray,int val);
+static int publicacion_setIdCliente(Publicacion* pArray,int val);
 /**
  * \brief Inicializa el array de publicaciones cambiando el isEmpty a 1
  * \param Publicacion * pArrayPubli Es el puntero al array de publicaciones
@@ -23,12 +27,12 @@ static int publicacion_generarNuevoId (void);
  * \return (-1) Error / (0) Ok
  *
  */
-int publicacion_init(Publicacion * pArrayPubli, int limite){
+int publicacion_init(Publicacion * pArrayPubli[], int limite){
 	int retorno = -1;
 	if (pArrayPubli != NULL && limite >0){
 		for (int i = 0; i<limite; i++ )
 		{
-			pArrayPubli[i].isEmpty = TRUE;
+			pArrayPubli[i]=NULL;
 		}
 		retorno = 0;
 	}
@@ -45,7 +49,8 @@ int publicacion_init(Publicacion * pArrayPubli, int limite){
  * \return (-1) Error / (0) Ok
  *
  */
-int publicacion_alta (Publicacion * pArrayPubli, int limitePubli, Cliente * pArrayCliente , int limiteCliente)
+/*
+int publicacion_alta (Publicacion * pArrayPubli[], int limitePubli, Cliente * pArrayCliente , int limiteCliente)
 {
 	int retorno = -1;
 	int indice;
@@ -55,17 +60,14 @@ int publicacion_alta (Publicacion * pArrayPubli, int limitePubli, Cliente * pArr
 	{
 		if (publicacion_buscarLibreRef (pArrayPubli, limitePubli, &indice) == 0)
 		{
-		cliente_imprimir(pArrayCliente,limiteCliente);
+				cliente_printAll(*pArrayCliente,limiteCliente);
 				if (utn_getNumero(&bufferPublicacion.idCliente,"\n Ingrese id de cliente","error",0,99999,2) == 0 &&
 					cliente_buscarIndicePorId(pArrayCliente, limiteCliente, bufferPublicacion.idCliente) != -1)
 				{
 					if  (utn_getNumero(&bufferPublicacion.rubro,"\n Ingrese Rubro (1-10)", "Error al ingresar los datos. Vuelva a intentar",MIN_RUBRO,MAX_RUBRO,2) == 0 &&
 						utn_getString(bufferPublicacion.aviso, SIZE_AVISO, "\n Ingrese Aviso (max 64 caracteres)", "Error al ingresar los datos. Vuelva a intentar", 2) == 0)
 					{
-						pArrayPubli[indice] = bufferPublicacion;
-						pArrayPubli[indice].estado = PUBLICACION_ACTIVA;
-						pArrayPubli[indice].id = publicacion_generarNuevoId();
-						pArrayPubli[indice].isEmpty = FALSE;
+
 						retorno = 0;
 						printf("\n---Nueva Publicacion Activa --- \n ID Publicacion-> %d ID Cliente: %d Aviso: %s Rubro: %d ",pArrayPubli[indice].id,pArrayPubli[indice].idCliente, pArrayPubli[indice].aviso,pArrayPubli[indice].rubro);
 					}
@@ -121,6 +123,7 @@ return retorno;
  * \return (-1) Error / (1) Ok
  *
  */
+/*
 int publicacion_sePuedeSeguir(Publicacion * pArrayPubli , int limitePubli){
 	int retorno = -1;
 	if (pArrayPubli != NULL && limitePubli >0)
@@ -147,7 +150,7 @@ return retorno;
  * \return (-1) Error / (0) Ok
  *
  */
-
+/*
 int publicacion_imprimirActivas (Publicacion * pArrayPubli , int limite , Cliente * pArrayCliente , int limiteCliente) {
 	int retorno = -1;
 	char strEstado[10];
@@ -190,7 +193,7 @@ return retorno;
  * \return (-1) Error / (0) Ok
  *
  */
-
+/*
 
 int publicacion_imprimirPausadas (Publicacion * pArrayPubli , int limite , Cliente * pArrayCliente , int limiteCliente) {
 	int retorno = -1;
@@ -233,6 +236,8 @@ return retorno;
  * \return (-1) Error / (0) Ok
  *
  */
+
+/*
 int publicacion_pausar (Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
 	int idBuscar;
@@ -284,7 +289,7 @@ int publicacion_pausar (Publicacion * pArrayPubli, int limite , Cliente * pArray
  * \return (-1) Error / (0) Ok
  *
  */
-
+/*
 int publicacion_reanudar (Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
 	int idBuscar;
@@ -335,6 +340,7 @@ int publicacion_reanudar (Publicacion * pArrayPubli, int limite , Cliente * pArr
  * \param int * resContador, es el puntero para devovler el resultado.
  * \return (-1) Error / (0) Ok
  */
+/*
 
 int publicacion_cantidadPublicPorIdCliente(Publicacion * pArrayPublic, int limitePubli, int idCliente, int *resContador)
 {
@@ -358,7 +364,7 @@ int publicacion_cantidadPublicPorIdCliente(Publicacion * pArrayPublic, int limit
  * \param int idCLiente, es el id del cliente al que se quiere buscar la cantidad de avisos
  * \return (-1) Error / (0) Ok
  */
-
+/*
 void publicacion_listarPublicacionesDeCliente( Publicacion * pArrayPublic, int limitePubli , int idCliente){
 	char strEstado[10];
 	if (pArrayPublic!=NULL && limitePubli>0 && idCliente>0)
@@ -393,7 +399,7 @@ void publicacion_listarPublicacionesDeCliente( Publicacion * pArrayPublic, int l
  * \param int limiteCliente, es el tamaño de array de clientes
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_listaClientes (Cliente * pArrayCliente, int limiteClientes, Publicacion * pArrayPublic, int limitePubli){
 
 	int retorno = -1;
@@ -420,7 +426,7 @@ int publicacion_listaClientes (Cliente * pArrayCliente, int limiteClientes, Publ
  * \param int limiteCliente, es el tamaño de array de clientes
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_bajaClienteYPublicaciones(Publicacion * pArrayPubli, int limitePublic,Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
 	int idABorrar;
@@ -469,6 +475,7 @@ int publicacion_bajaClienteYPublicaciones(Publicacion * pArrayPubli, int limiteP
  * \param int idCLiente, es el id del cliente al que se quiere buscar la cantidad de avisos
  * \return (-1) Error / (0) Ok
  */
+/*
 
 int publicacion_baja (Publicacion * pArrayPubli, int limitePublic, int idCliente){
 	int retorno = -1;
@@ -486,7 +493,7 @@ int publicacion_baja (Publicacion * pArrayPubli, int limitePublic, int idCliente
 	return retorno;
 }
 
-/**
+
  * \brief Imprime por pantalla el cliente con mayor cantidad de avisos.
  * \param Publicacion * pArrayPubli Es el puntero al array de publicaciones
  * \param int limitePubli, es el tamaño de array
@@ -494,7 +501,7 @@ int publicacion_baja (Publicacion * pArrayPubli, int limitePublic, int idCliente
  * \param int limiteCliente, es el tamaño de array de clientes
  * \return (-1) Error / (0) Ok
  */
-
+/*
 
 int publicacion_clienteConMasAvisos(Publicacion * pArrayPubli, int limitePubli,Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
@@ -533,7 +540,7 @@ return retorno;
  * \param int limitePubli, es el tamaño de array
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_cantidadPausados (Publicacion * pArrayPubli, int limitePubli) {
 	int retorno = -1;
 	int contador=0;
@@ -566,6 +573,7 @@ int publicacion_cantidadPausados (Publicacion * pArrayPubli, int limitePubli) {
  * \param int limitePubli, es el tamaño de array
  * \return (-1) Error / (0) Ok
  */
+/*
 
 int publicacion_rubroConMasAvisos (Publicacion * pArrayPubli, int limitePubli){
 	int retorno = -1;
@@ -610,13 +618,13 @@ return retorno;
  * \return (-1) Error / (0) Ok
  */
 
-int publicacion_buscarLibreRef (Publicacion * pArrayPubli, int limite, int * pIndice){
+int publicacion_buscarLibreRef (Publicacion * pArrayPubli[], int limite, int * pIndice){
 	int retorno = -1;
 	int i ;
 		if (pArrayPubli != NULL && limite >0 && pIndice != NULL){
 			for ( i = 0; i<limite; i++)
 			{
-				if(pArrayPubli[i].isEmpty == TRUE)
+				if(pArrayPubli[i] == NULL)
 				{
 				*pIndice = i;
 				retorno = 0;
@@ -626,7 +634,8 @@ int publicacion_buscarLibreRef (Publicacion * pArrayPubli, int limite, int * pIn
 		}
 	return retorno;
 }
-/**
+
+/*
  * \brief Genera un id unico para las publicaciones-.
  * \return (-1) Error / (0) Ok
  */
@@ -645,7 +654,7 @@ static int publicacion_generarNuevoId (void) {
  * \param int * pIndice, puntero donde se devuelve el indice libre.
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_buscarIndicePorId (Publicacion * pArrayPubli, int limite,
 		               int idBuscar,int * pIndice){
 	int retorno = -1;
@@ -678,7 +687,7 @@ int publicacion_buscarIndicePorId (Publicacion * pArrayPubli, int limite,
  * \param int * pIndice, puntero donde se devuelve el indice libre.
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_buscarIndicePorIdPausadas (Publicacion * pArrayPubli, int limite,
 		               int idBuscar,int * pIndice){
 	int retorno = -1;
@@ -711,7 +720,7 @@ int publicacion_buscarIndicePorIdPausadas (Publicacion * pArrayPubli, int limite
  * \param int * pIndice, puntero donde se devuelve el indice libre.
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_buscarIndicePorIdActivas (Publicacion * pArrayPubli, int limite,
 		               int idBuscar,int * pIndice){
 	int retorno = -1;
@@ -736,6 +745,9 @@ int publicacion_buscarIndicePorIdActivas (Publicacion * pArrayPubli, int limite,
 			}
 		return retorno;
 }
+
+
+
 /**
  * \brief hardcodeo de datos
  * \param Publicacion * pArrayPubli Es el puntero al array de publicaciones
@@ -746,22 +758,174 @@ int publicacion_buscarIndicePorIdActivas (Publicacion * pArrayPubli, int limite,
  * \return (-1) Error / (0) Ok
  */
 
-int publicacion_altaForzada(Publicacion * pArray, int limite ,int idCliente,int rubro,  char * aviso){
+int publicacion_altaForzada(Publicacion * pArray[], int limite ,int idCliente,int rubro,  char * aviso){
 
 	int retorno = -1;
 	int indice;
 	if (publicacion_buscarLibreRef(pArray,limite, &indice) == 0)
 	{
-		strncpy(pArray[indice].aviso,aviso,SIZE_AVISO);
-		pArray[indice].idCliente = idCliente;
-		pArray[indice].rubro=rubro;
-		pArray[indice].estado=PUBLICACION_ACTIVA;
-		pArray[indice].id = publicacion_generarNuevoId();
-		pArray[indice].isEmpty = FALSE;
+		pArray[indice]=pub_new(idCliente, rubro, aviso, 1);
 		retorno=0;
 	}
 	return retorno;
 }
+
+int publicacion_printAll(Publicacion* pArray[], int len)
+{
+    int output = -1;
+    if (pArray != NULL && len > 0)
+    {
+
+        for (int x = 0; x < len; x++)
+        {
+            publicacion_PrintOne(pArray[x]);
+        }
+        output = 0;
+    }
+    return output;
+}
+
+int publicacion_PrintOne(Publicacion* pArray)
+{
+    int output = -1;
+    if(pArray!=NULL)
+    {
+        printf("# ID Cliente-%d '%s' ID Publi-%d  Rubro-%d %d\n", pArray->idCliente, pArray->aviso,pArray->id, pArray->rubro, pArray->estado);
+        output = 0;
+    }
+    return output;
+}
+
+
+Publicacion * pub_new(int idCliente,int  rubro, char * aviso, int estado){
+	Publicacion * pArray = NULL;
+	pArray = (Publicacion*)malloc(sizeof(Publicacion));
+	if (pArray!= NULL)
+	{
+		publicacion_setId(pArray, publicacion_generarNuevoId());
+		publicacion_setIdCliente(pArray, idCliente);
+		publicacion_setRubro(pArray,rubro);
+		publicacion_setEstado(pArray,estado);
+		publicacion_setAviso(pArray,aviso,64);
+	}
+
+	return pArray;
+}
+
+static int publicacion_setId(Publicacion* pArray,int val)
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		pArray->id =val;
+		ret=0;
+	}
+	return ret;
+}
+static int publicacion_setIdCliente(Publicacion* pArray,int val)
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		pArray->idCliente=val;
+		ret=0;
+	}
+	return ret;
+}
+
+
+static int publicacion_setRubro(Publicacion* pArray,int val)
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		pArray->rubro=val;
+		ret=0;
+	}
+	return ret;
+}
+
+static int publicacion_setEstado(Publicacion* pArray,int  val)
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		pArray->estado=val;
+		ret=0;
+	}
+	return ret;
+}
+
+static int publicacion_setAviso(Publicacion* pArray,char* val,int size)
+{
+	int ret=-1;
+	if(pArray!=NULL && val!=NULL && size>0)
+	{
+		strncpy(pArray->aviso,val,size);
+		ret=0;
+	}
+	return ret;
+}
+
+int publicacion_getAviso(Publicacion* pArray,char* val,int size)
+{
+	int ret=-1;
+	if(pArray!=NULL && val!=NULL && size>0)
+	{
+		strncpy(val,pArray->aviso,size);
+		ret=0;
+	}
+	return ret;
+}
+
+ int publicacion_getEstado(Publicacion* pArray,int  *val)
+
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		*val=pArray->estado;
+		ret=0;
+	}
+	return ret;
+}
+
+ int publicacion_getidCliente(Publicacion* pArray,int  *val)
+
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		*val=pArray->idCliente;
+		ret=0;
+	}
+	return ret;
+}
+
+ int publicacion_getidRubro(Publicacion* pArray,int  *val)
+
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		*val=pArray->rubro;
+		ret=0;
+	}
+	return ret;
+}
+
+ int publicacion_getId(Publicacion* pArray,int  *val)
+
+{
+	int ret=-1;
+	if(pArray!=NULL && val>0)
+	{
+		*val=pArray->id;
+		ret=0;
+	}
+	return ret;
+}
+
 
 
 /**
@@ -772,7 +936,7 @@ int publicacion_altaForzada(Publicacion * pArray, int limite ,int idCliente,int 
  * \param int limiteCliente, es el tamaño de array de clientes
  * \return (-1) Error / (0) Ok
  */
-
+/*
 
 int publicacion_clienteConMasAvisosActivos(Publicacion * pArrayPubli, int limitePubli,Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
@@ -821,7 +985,7 @@ return retorno;
  * \param int * resContador, es el puntero para devovler el resultado.
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_cantidadPublicPorIdClienteActivas(Publicacion * pArrayPublic, int limitePubli, int idCliente, int *resContador)
 {
 	int retorno = -1;
@@ -847,7 +1011,7 @@ int publicacion_cantidadPublicPorIdClienteActivas(Publicacion * pArrayPublic, in
  * \param int limiteCliente, es el tamaño de array de clientes
  * \return (-1) Error / (0) Ok
  */
-
+/*
 
 int publicacion_clienteConMasAvisosPausados(Publicacion * pArrayPubli, int limitePubli,Cliente * pArrayCliente, int limiteCliente){
 	int retorno = -1;
@@ -895,7 +1059,7 @@ return retorno;
  * \param int * resContador, es el puntero para devovler el resultado.
  * \return (-1) Error / (0) Ok
  */
-
+/*
 int publicacion_cantidadPublicPorIdClientePausados(Publicacion * pArrayPublic, int limitePubli, int idCliente, int *resContador)
 {
 	int retorno = -1;
@@ -912,7 +1076,7 @@ int publicacion_cantidadPublicPorIdClientePausados(Publicacion * pArrayPublic, i
 	return retorno;
 }
 
-
+**/
 
 
 

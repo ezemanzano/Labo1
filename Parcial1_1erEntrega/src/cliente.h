@@ -13,13 +13,13 @@
 #define TRUE 1
 #define FALSE 0
 
-	typedef struct {
-		char nombre[SIZE_NOMBRE];
-		char apellido[SIZE_NOMBRE];
-		char cuit[SIZE_CUIT];
-		int isEmpty;
-		int id;
-		} Cliente;
+typedef struct {
+	char nombre[SIZE_NOMBRE];
+	char apellido[SIZE_NOMBRE];
+	char cuit[SIZE_CUIT];
+	int isEmpty;
+	int id;
+	} Cliente;
 
 	int cliente_init(Cliente * pArrayClientes, int limite);
 
@@ -39,5 +39,6 @@
 
 	int cliente_altaForzada(Cliente * pArray, int limite , char * nombre, char * apellido, char * cuit);
 	int cliente_sePuedeSeguir(Cliente * pArrayCliente, int limiteCliente);
+	int cliente_noSeRepiteCuit(Cliente * pArrayCliente, int limiteCliente, char * cuitIngresado);
 
 #endif /* CLIENTE_H_ */

@@ -8,10 +8,9 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "cliente.h"
 #include "publicacion.h"
-
-
 
 static int myGets (char* cadena, int longitud);
 static int getInt (int* pResultado);
@@ -21,7 +20,7 @@ static int esFloat(char*cadena);
 static int esNombre (char*cadena, int limite);
 static int esCuit(char*cadena, int limite);
 static int esString (char*cadena, int limite);
-static void utn_subMenu(Publicacion * pArrayPublicacion , int limitePubli , Cliente * pArrayCliente , int limiteCliente);
+
 
 /** \brief Get data from the console.
 * position of the array
@@ -385,7 +384,8 @@ static int esString (char*cadena, int limite) {
 	return retorno;
 }
 
-void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Cliente * pArrayCliente , int limiteCliente){
+
+void utn_menuPrincipal (Publicacion * pArrayPublicacion [], int limitePubli , Cliente * pArrayCliente [], int limiteCliente){
 
 	int opcion;
 	do {
@@ -411,7 +411,8 @@ void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Clie
 			case 3:
 				if (cliente_sePuedeSeguir(pArrayCliente, limiteCliente) ==1)
 				{
-					publicacion_bajaClienteYPublicaciones(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+					//publicacion_bajaClienteYPublicaciones(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+					cliente_printAll(pArrayCliente, limiteCliente);
 				}
 				else
 				{
@@ -421,7 +422,8 @@ void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Clie
 			case 4 :
 				if (cliente_sePuedeSeguir(pArrayCliente, limiteCliente) == 1)
 				{
-					publicacion_alta(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+					//publicacion_alta(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+					//publicacion_printAll(pArrayPublicacion, limitePubli);
 				}
 				else
 				{
@@ -429,15 +431,15 @@ void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Clie
 				}
 				break;
 			case 5:
-				publicacion_pausar(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+				//publicacion_pausar(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
 				break;
 			case 6:
-				publicacion_reanudar(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+				//publicacion_reanudar(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
 				break;
 			case 7:
 				if (cliente_sePuedeSeguir(pArrayCliente, limiteCliente) ==1)
 				{
-					publicacion_listaClientes(pArrayCliente,limiteCliente,pArrayPublicacion,limitePubli);
+	//				publicacion_listaClientes(pArrayCliente,limiteCliente,pArrayPublicacion,limitePubli);
 				}
 				else
 				{
@@ -445,7 +447,7 @@ void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Clie
 				}
 				break;
 			case 8:
-				utn_subMenu(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
+		//		utn_subMenu(pArrayPublicacion, limitePubli, pArrayCliente, limiteCliente);
 				break;
 			}
 
@@ -456,10 +458,9 @@ void utn_menuPrincipal (Publicacion * pArrayPublicacion , int limitePubli , Clie
 
 }
 
+/*
 
-
-
-static void utn_subMenu(Publicacion * pArrayPublicacion , int limitePubli , Cliente * pArrayCliente , int limiteCliente){
+static void utn_subMenu(Publicacion * pArrayPublicacion[] , int limitePubli , Cliente * pArrayCliente [], int limiteCliente){
 	int opcion;
 	do{
 		utn_getNumero(&opcion, "\n 1) Cliente con mas avisos"
@@ -490,4 +491,5 @@ static void utn_subMenu(Publicacion * pArrayPublicacion , int limitePubli , Clie
 	} while(opcion!=6);
 
 }
+*/
 

@@ -26,7 +26,9 @@
 		int id;
 		} Publicacion;
 
-	int publicacion_init(Publicacion * pArrayPublicacions, int limite);
+		Publicacion * pub_new(int idCliente,int  rubro, char * aviso, int estado);
+
+		int publicacion_init(Publicacion * pArrayPubli[], int limite);
 	int publicacion_sePuedeSeguir(Publicacion * pArrayPubli , int limitePubli);
 
 	int publicacion_alta (Publicacion * pArrayPublicacions, int limite, Cliente * pArrayCliente , int limiteCliente);
@@ -54,11 +56,25 @@
 	int publicacion_informacionCliente(Publicacion * pArrayPubli, int limite , Cliente * pArrayCliente, int limiteCliente, int idCliente);
 
 	int publicacion_buscarLibre (Publicacion * pArrayPublicacions, int limite);
-	int publicacion_buscarLibreRef (Publicacion * pArrayPublicacions, int limite, int * pIndice);
+	int publicacion_buscarLibreRef (Publicacion * pArrayPublicacions[], int limite, int * pIndice);
 	int publicacion_buscarIndicePorId (Publicacion * pArrays, int limite,int idBuscar,int * pIndice);
 	int publicacion_buscarIndicePorIdPausadas (Publicacion * pArrayPubli, int limite,int idBuscar,int * pIndice);
 	int publicacion_buscarIndicePorIdActivas(Publicacion * pArrayPubli, int limite,int idBuscar,int * pIndice);
 
-	int publicacion_altaForzada(Publicacion * pArray, int limite ,int idCliente,int rubro,  char * aviso);
+	int publicacion_altaForzada(Publicacion * pArray[], int limite ,int idCliente,int rubro,  char * aviso);
+
+	int publicacion_PrintOne(Publicacion* pArray);
+	int publicacion_printAll(Publicacion* pArray[], int len);
+
+
+	//getters
+	int publicacion_getId(Publicacion* pArray,int  *val);
+	int publicacion_getIdCliente(Publicacion* pArray,int  *val);
+	int publicacion_getRubro(Publicacion* pArray,int  *val);
+	int publicacion_getEstado(Publicacion* pArray,int  *val);
+	int publicacion_getAviso(Publicacion* pArray,char* val,int size);
+
+
+
 
 #endif /* PUBLICACION_H_ */
