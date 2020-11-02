@@ -11,6 +11,7 @@ Employee* employee_new(void)
 {
 	return (Employee*)malloc(sizeof(Employee));
 }
+
 Employee* employee_newParametros(char * idStr,char* nombre,char * horasTrabajadas,char *sueldo)
 {
 	Employee* this = employee_new();
@@ -20,7 +21,7 @@ Employee* employee_newParametros(char * idStr,char* nombre,char * horasTrabajada
 			&& (employee_setHorasTrabajadas(this, atoi(horasTrabajadas)))==0
 			&& (employee_setSueldo(this, atoi(sueldo))) ==0
 			&& employee_setId(this,atoi(idStr))==0)
-			//funcion que devuelva el ultimo id
+
 		{
 			return this;
 		}

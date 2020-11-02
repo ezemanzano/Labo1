@@ -14,11 +14,10 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	int r;
-	int idMax;
-	int flagMax=0;
-
 	char var[64],var2[64],var3[64],var4[64];
-	do
+	if (pArrayListEmployee!=NULL&&pFile!=NULL)
+	{
+		do
 		{
 		r = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]",var,var2,var3,var4);
 		if (r==4)
@@ -28,18 +27,18 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 				{
 				Aux=employee_newParametros(var,var2,var3,var4);
 				ll_add(pArrayListEmployee,Aux);
-				if (idMax<atoi(var) || flagMax==0)
-				{
-					idMax=atoi(var);
-					retorno= idMax;
-					flagMax=1;
+				retorno=0;
 				}
-				}
-				//retorno= 0;
 			}
 
 		} while (!feof(pFile));
 	fclose(pFile);
+	}
+	else
+	{
+		printf("\n No se encontro el archivo");
+	}
+
 	return retorno;
 }
 
@@ -50,8 +49,30 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
+
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-
-    return 1;
+	int retorno =-1;
+	int var1;
+	if (pFile != NULL && pArrayListEmployee != NULL)
+    {
+	while(!feof(pFile))
+		{
+			Employee* empleado=employee_new();
+			var1=fread(empleado,sizeof(Employee),1,pFile);
+			if (var1==1 && empleado!=NULL)
+			{
+				ll_add(pArrayListEmployee,empleado);
+				employee_generarNuevoId();
+			}
+			retorno = 0;
+		}
+	}
+	else
+	{
+	printf("\n No se encontro el archivo..");
+	}
+fclose(pFile);
+return retorno;
 }
+

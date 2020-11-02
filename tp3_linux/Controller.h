@@ -11,3 +11,4 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
 
 int employee_lastId(LinkedList* pArrayListEmployee);
 int controller_buscarEmployeeIndicePorId(LinkedList* pArrayListEmployee, int idBuscar, int*indexEncontrado);
+int controller_encontrarLastId(LinkedList* pArrayListEmployee);
