@@ -573,7 +573,7 @@ int ll_filter(LinkedList* this, int (*pFunc)(void*))
 		for (int i = 0 ;i<ll_len(this);i++)
 		{
 			nodoAux=ll_get(this, i);
-			if (pFunc(nodoAux)==0)
+			if (pFunc(nodoAux)==1)
 			{
 				ll_remove(this, i);
 				i--;
@@ -644,6 +644,25 @@ float ll_reduceFloat(LinkedList* this, float (*pFunc)(void*))
     return returnAux;
 }
 
+int ll_filterByZone(LinkedList* this, int (*pFunc)(void*,char*),char * zonaFiltrar)
+{
+	int returnAux=-1;
+	Node * nodoAux;
+	if (this!=NULL && pFunc!=NULL)
+	{
+		for (int i = 0 ;i<ll_len(this);i++)
+		{
+			nodoAux=ll_get(this, i);
+			if (pFunc(nodoAux,zonaFiltrar)==1)
+			{
+				ll_remove(this, i);
+				i--;
+				returnAux=0;
+			}
+		}
+	}
+	return returnAux;
+}
 
 
 

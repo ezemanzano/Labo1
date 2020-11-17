@@ -20,6 +20,14 @@ typedef struct
 
 }Envio;
 
+typedef struct
+{
+	char zona_destino[64];
+}Destino;
+
+Destino* destino_new();
+Destino* destino_newParam( char * zona_destino);
+
 Envio* envio_new(void);
 Envio* envio_newParam(int idProducto, char* nombre_producto, int id_camion, char* zona_destino, int km_recorridos, int tipo_entrega, int costo_envio);
 
@@ -47,5 +55,18 @@ int isValidKm_recorridos(int km_recorridos);
 int isValidTipo_entrega(int tipo_entrega);
 
 int envio_imprimirTodos(void*thisA);
+int envio_calcularCostos(void*thisA);
 int envio_loadFromText(char* path , LinkedList* pArrayListEnvios);
+
+//int envio_filtrarPorZona(void*thisA);
+
+
+
+int destino_imprimirLista(void*thisA);
+int destino_getZona_destino(Destino* this, char * zona_destino);
+int envio_filtrarPorZona(void*thisA, char* zonaFiltrar);
+
+int envios_isDestinoInList(char * destino, LinkedList * pArrayDestino);
+int envio_listaDestinos(LinkedList* pArrayListEnvios, LinkedList * pArrayDestino);
+int envio_saveAsText(char* path , LinkedList* pArrayListEnvios);
 #endif /* ENVIO_H_ */

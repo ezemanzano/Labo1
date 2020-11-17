@@ -19,17 +19,16 @@ int parser_EnviosFromText(FILE* pFile , LinkedList* pArrayListEnvios)
 	{
 		do
 		{
-		r = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n],%[^,],%[^,]",var,var2,var3,var4,var5,var6);
+		r = fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,\n]",var,var2,var3,var4,var5,var6);
 		if (r==6)
 			{
 				Envio* Aux = envio_new();
 				if (Aux!=NULL)
 				{
-				Aux=envio_newParam(atoi(var),var2,atoi(var3),var4,atoi(var5),atoi(var5),0);
+				Aux=envio_newParam(atoi(var),var2,atoi(var3),var4,atoi(var5),atoi(var6),0);
 				ll_add(pArrayListEnvios,Aux);
 				retorno=0;
 				}
-			printf("aca");
 			}
 
 		} while (!feof(pFile));

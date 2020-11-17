@@ -56,3 +56,4 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
 int ll_map(LinkedList* this, int (*pFunc)(void*));
 int ll_reduceInt(LinkedList* this, int (*pFunc)(void*), int * pResultado);
 int ll_filter(LinkedList* this, int (*pFunc)(void*));
+int ll_filterByZone(LinkedList* this, int (*pFunc)(void*,char*),char * zonaFiltrar);
