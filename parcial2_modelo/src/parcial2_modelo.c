@@ -50,8 +50,8 @@ case 4:
 	break;
 case 5:
 	printf("\n *** Listado de zonas ***");
-	 envio_listaDestinos(pArrrayListEnvios,pArrayDestino);
-	 ll_map(pArrayDestino,destino_imprimirLista );
+	envio_listaDestinos(pArrrayListEnvios,pArrayDestino);
+	ll_map(pArrayDestino,destino_imprimirLista );
 break;
 }
 }while(opcion!=6);

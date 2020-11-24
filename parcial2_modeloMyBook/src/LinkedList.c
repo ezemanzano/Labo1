@@ -596,10 +596,8 @@ int ll_map(LinkedList* this, int (*pFunc)(void*))
     	for (int i = 0;i<len;i++)
     	{
     		pElemento=ll_get(this, i);
-    		if(pFunc(pElemento)==1)
-    		{
+    		pFunc(pElemento);
     		returnAux=0;
-    		}
     	}
     }
     return returnAux;

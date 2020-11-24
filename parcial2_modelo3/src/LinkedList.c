@@ -563,6 +563,13 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 	    return returnAux;
 	}
 
+/** \brief Elimina los elementos de la lista utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                               ( 0) Si ok
+ */
+
 
 int ll_filter(LinkedList* this, int (*pFunc)(void*))
 {
@@ -584,7 +591,12 @@ int ll_filter(LinkedList* this, int (*pFunc)(void*))
 	return returnAux;
 }
 
-
+/** \brief Recorre los elementos de la lista
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                               ( 0) Si ok
+ */
 
 int ll_map(LinkedList* this, int (*pFunc)(void*))
 {
@@ -596,15 +608,20 @@ int ll_map(LinkedList* this, int (*pFunc)(void*))
     	for (int i = 0;i<len;i++)
     	{
     		pElemento=ll_get(this, i);
-    		if(pFunc(pElemento)==1)
-    		{
+    		pFunc(pElemento);
     		returnAux=0;
-    		}
     	}
     }
     return returnAux;
-
 }
+
+/** \brief Reduce la lista a un Entero
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \param int * prResutlado -> puntero donde devuelve el valor final
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                               ( 0) Si ok
+ */
 
 int ll_reduceInt(LinkedList* this, int (*pFunc)(void*), int * pResultado)
 {
@@ -627,7 +644,36 @@ int ll_reduceInt(LinkedList* this, int (*pFunc)(void*), int * pResultado)
 }
 
 
-float ll_reduceFloat(LinkedList* this, float (*pFunc)(void*))
+
+int ll_reduceIntbyID(LinkedList* this, int (*pFunc)(void*,int), int * pResultado, int idCliente)
+{
+    int returnAux =-1;
+    int len = ll_len(this);
+    void* pElemento;
+    int resultado=0;
+    if(this!=NULL)
+    {
+
+    	for (int i = 0;i<len;i++)
+    	{
+    		pElemento=ll_get(this, i);
+    		resultado= resultado+pFunc(pElemento,idCliente);
+    		*pResultado=resultado;
+    		returnAux=0;
+    	}
+    }
+    return returnAux;
+}
+
+/** \brief Reduce la lista a un Float
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \param float * prResutlado -> puntero donde devuelve el valor final
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                               ( 0) Si ok
+ */
+
+float ll_reduceFloat(LinkedList* this, float (*pFunc)(void*), float * pResultado)
 {
     float returnAux =-1;
     int len = ll_len(this);
@@ -641,12 +687,14 @@ float ll_reduceFloat(LinkedList* this, float (*pFunc)(void*))
     		pElemento=ll_get(this, i);
     		resultado = resultado + pFunc(pElemento);
     		returnAux=0;
+    		*pResultado = resultado;
     	}
+
     }
     return returnAux;
 }
 
-int ll_filterByZone(LinkedList* this, int (*pFunc)(void*,char*),char * zonaFiltrar)
+int ll_filterByInt(LinkedList* this, int (*pFunc)(void*,int),int Cobradas)
 {
 	int returnAux=-1;
 	Node * nodoAux;
@@ -655,7 +703,7 @@ int ll_filterByZone(LinkedList* this, int (*pFunc)(void*,char*),char * zonaFiltr
 		for (int i = 0 ;i<ll_len(this);i++)
 		{
 			nodoAux=ll_get(this, i);
-			if (pFunc(nodoAux,zonaFiltrar)==1)
+			if (pFunc(nodoAux,Cobradas)==1)
 			{
 				ll_remove(this, i);
 				i--;
@@ -666,58 +714,25 @@ int ll_filterByZone(LinkedList* this, int (*pFunc)(void*,char*),char * zonaFiltr
 	return returnAux;
 }
 
-
-
-
-/*
-int returnAux =-1;
-    void * elementoI;
-    void* elementoJ;
-    if(this!=NULL && (order ==1 || order == 0) && pFunc!=NULL)
-    {
-        for (int i = 0; i<ll_len(this)-1;i++)
-        {
-            for (int j = i+1;j<ll_len(this);j++)
-            {
-                elementoI=ll_get(this, i);
-                elementoJ=ll_get(this, j);
-                if ((order == 0 && pFunc(elementoI,elementoJ)<0  )||
-                    (order == 1 && pFunc(elementoI,elementoJ)>0 ))
-                {
-                    ll_set(this, i, elementoJ);
-                    ll_set(this, j, elementoI);
-                }
-            }
-
-        }
-  returnAux=0;
-    }
-    return returnAux;
-
-
-int ll_map(LinkedList* this, int (*pFunc)(void*))
+int ll_mapAndBreak(LinkedList* this, int (*pFunc)(void*,int),int indice)
 {
     int returnAux =-1;
     int len = ll_len(this);
     void* pElemento;
+
     if(this!=NULL)
     {
-    	for (int i = 0;i<len;i++)
-    	{
-    		pElemento=ll_get(this, i);
-    		pFunc(pElemento);
-    		returnAux=0;
-    	}
+        for (int i = 0;i<len;i++)
+        {
+            pElemento=ll_get(this, i);
+            if(pFunc(pElemento,indice)==1)
+            {
+                returnAux=i;
+                break;
+            }
+        }
     }
     return returnAux;
-
 }
 
-NUEVAS FUNCIONES
-
-LL_FILTER
-RECORRE EL ARRAYLIST Y DECIDE SI HAY QUE QUITAR O NO EL ELEMENTO DE LA LISTA.
-
-
-*/
 
